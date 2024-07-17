@@ -41,9 +41,11 @@ const Search = () => {
             //Can add interactions with card here
             <View style={styles.card}>
               <Image source={{ uri: item.images.small }} style={styles.image} />
-              <Text>{item.name}</Text>
+              
             </View>
           )}
+          numColumns={2}
+          columnWrapperStyle={styles.row} // Add a wrapper style for rows
         />
       )}
     </View>
@@ -54,6 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    paddingHorizontal: 5,
   },
   input: {
     height: 40,
@@ -63,14 +66,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   card: {
-    flexDirection: 'row',
+    flex: 1,
     alignItems: 'center',
     marginBottom: 10,
+    marginHorizontal: 5,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 8,
+    elevation: 2,
   },
   image: {
-    width: 50,
-    height: 70,
-    marginRight: 10,
+    width: 150,
+    height: 210,
+  },
+  row: {
+    justifyContent: 'space-between', // Ensure the columns are spaced evenly
   },
 });
 

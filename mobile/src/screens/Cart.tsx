@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-function Profile() {
+function Cart() {
 	return (
 	  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-		<Text>Profile Screen</Text>
+		<Text>Cart Screen</Text>
 	  </View>
 	);
   }
 
-export default Profile;
+export default Cart;
