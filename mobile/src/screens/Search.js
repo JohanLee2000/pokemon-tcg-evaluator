@@ -1,6 +1,6 @@
-// src/screens/Search.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import pokemon from 'pokemontcgsdk';
 import { POKEMON_API_KEY } from '@env';
 
@@ -11,11 +11,19 @@ const Search = () => {
   const [query, setQuery] = useState('');
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState('name'); // State for selected filter
 
   const searchCards = async () => {
     setLoading(true);
     try {
-      const result = await pokemon.card.where({ q: `name:${query}` });
+      let result;
+      if (filter === 'name') {
+        result = await pokemon.card.where({ q: `name:${query}` });
+      } else if (filter === 'series') {
+        result = await pokemon.set.where({ q: `series:${query}` });
+      } else if (filter === 'types') {
+        result = await pokemon.card.where({ q: `types:${query}` });
+      }
       setCards(result.data);
     } catch (error) {
       console.error(error);
@@ -26,22 +34,37 @@ const Search = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search for Pokémon cards"
-        value={query}
-        onChangeText={setQuery}
-      />
-      <Button title="Search" onPress={searchCards} disabled={loading} />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter search term here"
+          value={query}
+          onChangeText={setQuery}
+          onSubmitEditing={searchCards} // Trigger search on keyboard submit
+          returnKeyType="go" // Change the keyboard button to "Search"
+        />
+        <View style={styles.filterContainer}>
+          <Text style={styles.filterLabel}>Filter by:</Text>
+          <Picker
+            selectedValue={filter}
+            style={styles.picker}
+            onValueChange={(itemValue) => setFilter(itemValue)}
+          >
+            <Picker.Item label="Name" value="name" />
+            <Picker.Item label="Series" value="series" />
+            <Picker.Item label="Types" value="types" />
+          </Picker>
+        </View>
+        <Button title="Search" onPress={searchCards} disabled={loading} />
+      </View>
       {loading ? <Text>Loading...</Text> : (
         <FlatList
           data={cards}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            //Can add interactions with card here
+            //Can add interactions with card here. For Sets, use item.images.symbol or item.images.logo
             <View style={styles.card}>
               <Image source={{ uri: item.images.small }} style={styles.image} />
-              
             </View>
           )}
           numColumns={2}
@@ -55,15 +78,33 @@ const Search = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingTop: 16,
     paddingHorizontal: 5,
   },
   input: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 8,
+    marginBottom: 0,
+    paddingHorizontal: 10,
+  },
+  inputContainer: {
+    marginHorizontal: 4,
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  filterLabel: {
+    marginRight: 10,
+    paddingHorizontal: 10,
+  },
+  picker: {
+    flex: 1,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
   },
   card: {
     flex: 1,
@@ -80,7 +121,7 @@ const styles = StyleSheet.create({
     height: 210,
   },
   row: {
-    justifyContent: 'space-between', // Ensure the columns are spaced evenly
+    justifyContent: 'space-between',
   },
 });
 

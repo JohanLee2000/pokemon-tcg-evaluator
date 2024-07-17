@@ -17,23 +17,23 @@ const HomeStack = () => {
   return (
     <Stack.Navigator initialRouteName='HomeScreen'>
       <Stack.Screen name='HomeScreen' component={Home} 
-      options={{headerTitle: 'Pokemon TCG Evaluator', headerStyle: {backgroundColor: '#FF5733'}, headerTitleAlign: 'center'}}/>
+      options={{headerTitle: 'Pokémon TCG Evaluator', headerStyle: {backgroundColor: '#FF5733'}, headerTitleAlign: 'center'}}/>
     </Stack.Navigator>
   )
 }
 
 const SearchStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName='SearchScreen'>
       <Stack.Screen name='SearchScreen' component={Search} 
-      options={{headerTitle: 'Search for Pokemon', headerStyle: {backgroundColor: '#5982C2'}, headerTitleAlign: 'center'}}/>
+      options={{headerTitle: 'Search for Pokémon', headerStyle: {backgroundColor: '#5982C2'}, headerTitleAlign: 'center'}}/>
     </Stack.Navigator>
   )
 }
 
 const CartStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName='CartScreen'>
       <Stack.Screen name='CartScreen' component={Cart} 
       options={{headerTitle: 'Cart', headerStyle: {backgroundColor: '#419a49'}, headerTitleAlign: 'center'}}/>
     </Stack.Navigator>
@@ -42,7 +42,7 @@ const CartStack = () => {
 
 const SettingsStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName='SettingsScreen'>
       <Stack.Screen name='SettingsScreen' component={Settings} 
       options={{headerTitle: 'Settings', headerStyle: {backgroundColor: '#c3b091'}, headerTitleAlign: 'center'}}/>
     </Stack.Navigator>
