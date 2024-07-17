@@ -1,12 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
-import { Provider, PaperProvider } from 'react-native-paper';
+import { PaperProvider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Settings from './src/screens/Settings';
-import Achievements from './src/screens/Achievements';
+import Search from './src/screens/Search';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -26,11 +26,11 @@ export default function App() {
             }}
           />
           <Tab.Screen
-            name="Achievements"
-            component={Achievements}
+            name="Search"
+            component={Search}
             options={{
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="trophy" color={color} size={26} />
+                <MaterialCommunityIcons name="magnify" color={color} size={26} />
               ),
               tabBarColor: '#5982C2'
             }}
