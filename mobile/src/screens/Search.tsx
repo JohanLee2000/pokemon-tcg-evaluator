@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import Modal from 'react-native-modal';
 import pokemon from 'pokemontcgsdk';
 import { POKEMON_API_KEY } from '@env';
+import { Ionicons } from '@expo/vector-icons';
 
 // Configure the API key for pokemontcgsdk
 pokemon.configure({ apiKey: POKEMON_API_KEY });
@@ -19,17 +20,18 @@ const Search = () => {
   const [query, setQuery] = useState('');
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState('name'); // State for selected filter
+  const [filter, setFilter] = useState('Name'); // State for selected filter
+  const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
 
   const searchCards = async () => {
     setLoading(true);
     try {
       let result;
-      if (filter === 'name') {
+      if (filter === 'Name') {
         result = await pokemon.card.where({ q: `name:${query}` });
-      } else if (filter === 'series') {
+      } else if (filter === 'Series') {
         result = await pokemon.set.where({ q: `series:${query}` });
-      } else if (filter === 'types') {
+      } else if (filter === 'Types') {
         result = await pokemon.card.where({ q: `types:${query}` });
       }
       setCards(result.data);
@@ -38,6 +40,11 @@ const Search = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const applyFilter = (selectedFilter: string) => {
+    setFilter(selectedFilter);
+    setModalVisible(false);
   };
 
   return (
@@ -53,15 +60,12 @@ const Search = () => {
         />
         <View style={styles.filterContainer}>
           <Text style={styles.filterLabel}>Filter by:</Text>
-          <Picker
-            selectedValue={filter}
-            style={styles.picker}
-            onValueChange={(itemValue) => setFilter(itemValue)}
-          >
-            <Picker.Item label="Name" value="name" />
-            <Picker.Item label="Series" value="series" />
-            <Picker.Item label="Types" value="types" />
-          </Picker>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <View style={styles.filterContent}>
+              <Text style={styles.filterText}>{filter}</Text>
+              <Ionicons name="filter" size={24} color="black" />
+            </View>
+          </TouchableOpacity>
         </View>
         <Button title="Search" onPress={searchCards} disabled={loading} />
       </View>
@@ -70,7 +74,6 @@ const Search = () => {
           data={cards}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            //Can add interactions with card here. For Sets, use item.images.symbol or item.images.logo
             <View style={styles.card}>
               <Image source={{ uri: item.images.small }} style={styles.image} />
             </View>
@@ -79,6 +82,22 @@ const Search = () => {
           columnWrapperStyle={styles.row} // Add a wrapper style for rows
         />
       )}
+
+      <Modal
+        animationIn="pulse"
+
+        isVisible={modalVisible}
+        onBackdropPress={() => setModalVisible(false)}
+        onBackButtonPress={() => setModalVisible(false)}
+        style={styles.modal}
+      >
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Filter by</Text>
+            <Button title="Name" onPress={() => applyFilter('Name')} />
+            <Button title="Series" onPress={() => applyFilter('Series')} />
+            <Button title="Types" onPress={() => applyFilter('Types')} />
+          </View>
+      </Modal>
     </View>
   );
 };
@@ -93,7 +112,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 0,
+    marginBottom: 3,
     paddingHorizontal: 10,
   },
   inputContainer: {
@@ -102,17 +121,18 @@ const styles = StyleSheet.create({
   filterContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 2,
+    marginBottom: 3,
+  },
+  filterContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   filterLabel: {
-    marginRight: 10,
+    marginRight: 7,
     paddingHorizontal: 10,
   },
-  picker: {
-    flex: 1,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+  filterText: {
+    marginRight: 5,
   },
   card: {
     flex: 1,
@@ -130,6 +150,21 @@ const styles = StyleSheet.create({
   },
   row: {
     justifyContent: 'space-between',
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
 
