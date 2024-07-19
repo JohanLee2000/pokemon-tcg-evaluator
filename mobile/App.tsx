@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import Home from './src/screens/Home';
 import Cart from './src/screens/Cart';
-import Settings from './src/screens/Settings';
+import Cards from './src/screens/Cards';
 import Search from './src/screens/Search';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -31,20 +31,20 @@ const SearchStack = () => {
   )
 }
 
-const CartStack = () => {
+const CardsStack = () => {
   return (
-    <Stack.Navigator initialRouteName='CartScreen'>
-      <Stack.Screen name='CartScreen' component={Cart} 
-      options={{headerTitle: 'Cart', headerStyle: {backgroundColor: '#419a49'}, headerTitleAlign: 'center'}}/>
+    <Stack.Navigator initialRouteName='CardsScreen'>
+      <Stack.Screen name='CardsScreen' component={Cards} 
+      options={{headerTitle: 'Cards', headerStyle: {backgroundColor: '#419a49'}, headerTitleAlign: 'center'}}/>
     </Stack.Navigator>
   )
 }
 
-const SettingsStack = () => {
+const CartStack = () => {
   return (
-    <Stack.Navigator initialRouteName='SettingsScreen'>
-      <Stack.Screen name='SettingsScreen' component={Settings} 
-      options={{headerTitle: 'Settings', headerStyle: {backgroundColor: '#c3b091'}, headerTitleAlign: 'center'}}/>
+    <Stack.Navigator initialRouteName='CartScreen'>
+      <Stack.Screen name='CartScreen' component={Cart} 
+      options={{headerTitle: 'Cart', headerStyle: {backgroundColor: '#c3b091'}, headerTitleAlign: 'center'}}/>
     </Stack.Navigator>
   )
 }
@@ -80,21 +80,21 @@ export default function App() {
             }}
           />
           <Tab.Screen
-            name="Cart"
-            component={CartStack}
+            name="Cards"
+            component={CardsStack}
             options={{
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="cart" color={color} size={26} />
+                <MaterialCommunityIcons name="cards" color={color} size={26} />
               ),
               tabBarColor: '#419a49'
             }}
           />
           <Tab.Screen
-            name="Settings"
-            component={SettingsStack}
+            name="Cart"
+            component={CartStack}
             options={{
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="cog" color={color} size={26} />
+                <MaterialCommunityIcons name="cart" color={color} size={26} />
               ),
               tabBarColor: '#c3b091'
             }}

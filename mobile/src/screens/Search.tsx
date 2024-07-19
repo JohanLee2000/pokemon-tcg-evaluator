@@ -7,9 +7,17 @@ import { POKEMON_API_KEY } from '@env';
 // Configure the API key for pokemontcgsdk
 pokemon.configure({ apiKey: POKEMON_API_KEY });
 
+type Card = {
+  id: string;
+  images: {
+    small: string;
+    large: string;
+  };
+};
+
 const Search = () => {
   const [query, setQuery] = useState('');
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState('name'); // State for selected filter
 
