@@ -1,31 +1,25 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView, Keyboard } from 'react-native';
 import Modal from 'react-native-modal';
-import pokemon from 'pokemontcgsdk';
-import { POKEMON_API_KEY } from '@env';
+import pokemon from '../configs/pokemon';
 import { Ionicons } from '@expo/vector-icons';
+import CardModal from 'src/components/CardModal';
+import { Card } from 'src/components/CardModal';
 
-// Configure the API key for pokemontcgsdk
-pokemon.configure({ apiKey: POKEMON_API_KEY });
-
-type Card = {
-  id: string;
-  images: {
-    small: string;
-    large: string;
-  };
-};
 
 const Search = () => {
   const [query, setQuery] = useState('');
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState('Name'); // State for selected filter
-  const [modalVisible, setModalVisible] = useState(false); // State for modal visibility
+  const [filterModalVisible, setFilterModalVisible] = useState(false); // State for modal visibility
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null); // State for selected card
+  const [cardModalVisible, setCardModalVisible] = useState(false); // State for card modal visibility
 
   const searchCards = async () => {
     setLoading(true);
     try {
+      Keyboard.dismiss();
       let result;
       if (filter === 'Name') {
         result = await pokemon.card.where({ q: `name:${query}` });
@@ -35,6 +29,7 @@ const Search = () => {
         result = await pokemon.card.where({ q: `types:${query}` });
       }
       setCards(result.data);
+      console.log(result.data[0]);
     } catch (error) {
       console.error(error);
     } finally {
@@ -44,7 +39,17 @@ const Search = () => {
 
   const applyFilter = (selectedFilter: string) => {
     setFilter(selectedFilter);
-    setModalVisible(false);
+    setFilterModalVisible(false);
+  };
+
+  const openCardModal = (card: Card) => {
+    setSelectedCard(card);
+    setCardModalVisible(true);
+  };
+
+  const closeCardModal = () => {
+    setCardModalVisible(false);
+    setSelectedCard(null);
   };
 
   return (
@@ -58,37 +63,44 @@ const Search = () => {
           onSubmitEditing={searchCards} // Trigger search on keyboard submit
           returnKeyType="go" // Change the keyboard button to "Search"
         />
+        {/* Filter  */}
         <View style={styles.filterContainer}>
           <Text style={styles.filterLabel}>Filter by:</Text>
-          <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
             <View style={styles.filterContent}>
               <Text style={styles.filterText}>{filter}</Text>
               <Ionicons name="filter" size={24} color="black" />
             </View>
           </TouchableOpacity>
         </View>
-        <Button title="Search" onPress={searchCards} disabled={loading} />
+        {/* Search Button */}
+        <View style={styles.buttonContainer}>
+          <Button title="Search" onPress={searchCards} disabled={loading} />
+        </View>
       </View>
+      {/* Cards List*/}
       {loading ? <Text>Loading...</Text> : (
         <FlatList
           data={cards}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <Image source={{ uri: item.images.small }} style={styles.image} />
+              <TouchableOpacity onPress={() => openCardModal(item)}>
+                <Image source={{ uri: item.images.small }} style={styles.image} />
+              </TouchableOpacity>
             </View>
           )}
           numColumns={2}
           columnWrapperStyle={styles.row} // Add a wrapper style for rows
         />
       )}
-
+      {/* Filter Modal */}
       <Modal
         animationIn="pulse"
-
-        isVisible={modalVisible}
-        onBackdropPress={() => setModalVisible(false)}
-        onBackButtonPress={() => setModalVisible(false)}
+        animationOut="bounceOut"
+        isVisible={filterModalVisible}
+        onBackdropPress={() => setFilterModalVisible(false)}
+        onBackButtonPress={() => setFilterModalVisible(false)}
         style={styles.modal}
       >
           <View style={styles.modalContainer}>
@@ -98,6 +110,11 @@ const Search = () => {
             <Button title="Types" onPress={() => applyFilter('Types')} />
           </View>
       </Modal>
+      <CardModal
+        isVisible={cardModalVisible}
+        onClose={closeCardModal}
+        card={selectedCard}
+      />
     </View>
   );
 };
@@ -130,9 +147,15 @@ const styles = StyleSheet.create({
   filterLabel: {
     marginRight: 7,
     paddingHorizontal: 10,
+    fontSize: 16,
   },
   filterText: {
     marginRight: 5,
+    fontSize: 16,
+  },
+  buttonContainer: {
+    paddingHorizontal: 30,
+    
   },
   card: {
     flex: 1,
