@@ -3,6 +3,7 @@
 import React from 'react';
 import { View, Text, Image, Button, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
+import { fireSymbol, waterSymbol, grassSymbol, darkSymbol, dragonSymbol, electricSymbol, fairySymbol, fightingSymbol, normalSymbol, psychicSymbol, metalSymbol } from "../assets/images"
 
 export type Card = {
   id: string;
@@ -12,7 +13,7 @@ export type Card = {
     large: string;
   };
   hp: string;
-  types: string;
+  types: string[];
   artist: string;
   nationalPokedexNumbers: number;
   rarity?: string;
@@ -26,6 +27,7 @@ export type Card = {
   }[];
   set?: {
     id: string;
+    releaseDate: string;
 	images: {
 		logo: string;
 		symbol: string;
@@ -45,6 +47,19 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
 
   const attackNames = card.attacks?.map(attack => attack.name).join(', ');
 
+  const typeImages = {
+    Fire: fireSymbol,
+    Water: waterSymbol,
+    Grass: grassSymbol,
+    Darkness: darkSymbol,
+    Dragon: dragonSymbol,
+    Lightning: electricSymbol,
+    Fairy: fairySymbol,
+    Fighting: fightingSymbol,
+    Colorless: normalSymbol,
+    Psychic: psychicSymbol,
+    Metal: metalSymbol,
+  };
 
   return (
     <Modal
@@ -59,7 +74,13 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
         {/* Add more card details here */}
 		<Text>Market Price: ${card.cardmarket?.prices.averageSellPrice ?? 'N/A'}</Text>
 		<Text>HP: {card.hp}</Text>
-		<Text>Type: {card.types}</Text>
+      <View style={styles.types}>
+      <Text>Type: {card.types.join(', ')}</Text>
+        {card.types.map((type, index) => (
+          <Image key={index} source={typeImages[type]} style={styles.typeImage} resizeMode='contain' />
+        ))}
+      </View>
+		
 		{attackNames ? (
           <Text>Attacks: {attackNames}</Text>
         ) : (
@@ -68,6 +89,7 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
 		{card.rarity ? <Text>Rarity: {card.rarity}</Text> : (<Text>Rarity not found</Text>)}
 		<Text>Artist: {card.artist}</Text>
 		<Text>Pokedex: #{card.nationalPokedexNumbers}</Text>
+    <Text>Release Date: {card.set.releaseDate}</Text>
 		<Text>Set: {card.set.id} </Text> 
 		<Image source={{ uri: card.set.images.symbol }} style={styles.logoImage} resizeMode='contain' />
 
@@ -100,8 +122,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   logoImage: {
-	width: 50,
+	  width: 50,
     height: 50,
+  },
+  types: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  typeImage: {
+    width: 20,
+    height: 20,
   },
 });
 
