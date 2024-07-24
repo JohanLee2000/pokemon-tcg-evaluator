@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView, Keyboard } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
 import Modal from 'react-native-modal';
 import pokemon from '../configs/pokemon';
 import { Ionicons } from '@expo/vector-icons';

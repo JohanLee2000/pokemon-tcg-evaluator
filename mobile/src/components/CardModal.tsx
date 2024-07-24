@@ -16,6 +16,7 @@ export type Card = {
   types: string[];
   artist: string;
   nationalPokedexNumbers: number;
+  number: number;
   rarity?: string;
   cardmarket?: {
     prices: {
@@ -28,6 +29,7 @@ export type Card = {
   set?: {
     id: string;
     releaseDate: string;
+    printedTotal: number;
 	images: {
 		logo: string;
 		symbol: string;
@@ -90,9 +92,8 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
 		<Text>Artist: {card.artist}</Text>
 		<Text>Pokedex: #{card.nationalPokedexNumbers}</Text>
     <Text>Release Date: {card.set.releaseDate}</Text>
-		<Text>Set: {card.set.id} </Text> 
+		<Text>Set: {card.set.id} ({card.number}/{card.set.printedTotal}) </Text> 
 		<Image source={{ uri: card.set.images.symbol }} style={styles.logoImage} resizeMode='contain' />
-
         <Button title="Close" onPress={onClose} />
       </View>
     </Modal>
