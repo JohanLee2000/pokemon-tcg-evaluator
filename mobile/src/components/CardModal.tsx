@@ -1,8 +1,9 @@
 //When clicked, card modal pops up with card information. Can be used in collections, featured cards, search results, cart.
 // CardModal.tsx
 import React from 'react';
-import { View, Text, Image, Button, StyleSheet } from 'react-native';
+import { View, Text, Image, Button } from 'react-native';
 import Modal from 'react-native-modal';
+import { styles } from 'src/assets/styles';
 import { fireSymbol, waterSymbol, grassSymbol, darkSymbol, dragonSymbol, electricSymbol, fairySymbol, fightingSymbol, normalSymbol, psychicSymbol, metalSymbol } from "../assets/images"
 
 export type Card = {
@@ -70,9 +71,9 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
       onBackButtonPress={onClose}
       style={styles.modal}
     >
-      <View style={styles.modalContainer}>
+      <View style={styles.modalContainer2}>
         <Text style={styles.title}>{card.name}</Text>
-        <Image source={{ uri: card.images.large }} style={styles.image} />
+        <Image source={{ uri: card.images.large }} style={styles.cardImage} />
         {/* Add more card details here */}
 		<Text>Market Price: ${card.cardmarket?.prices.averageSellPrice ?? 'N/A'}</Text>
 		<Text>HP: {card.hp}</Text>
@@ -100,40 +101,6 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  image: {
-    width: 200,
-    height: 280,
-    marginBottom: 10,
-  },
-  logoImage: {
-	  width: 50,
-    height: 50,
-  },
-  types: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  typeImage: {
-    width: 20,
-    height: 20,
-  },
-});
+
 
 export default CardModal;

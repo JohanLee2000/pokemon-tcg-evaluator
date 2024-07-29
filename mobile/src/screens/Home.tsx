@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import pokemon from '../configs/pokemon';
 import CardModal from 'src/components/CardModal';
 import { Card } from 'src/components/CardModal';
+import { styles } from "src/assets/styles";
 
 function Home() {
   const [cards, setCards] = useState<Card[]>([]);
@@ -38,14 +39,14 @@ function Home() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container2}>
       <Text style={styles.title}>Featured Roulette</Text>
       <FlatList
         data={cards}
         horizontal
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <View style={styles.card}>
+          <View style={styles.card2}>
             <TouchableOpacity onPress={() => openCardModal(item)}>
               <Image source={{ uri: item.images.small }} style={styles.image} />
             </TouchableOpacity>
@@ -63,35 +64,5 @@ function Home() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 20, // Adjust the padding as needed
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  flatListContent: {
-    paddingVertical: 10, // Adjust the padding as needed
-  },
-  card: {
-    flex: 1,
-    alignItems: 'center',
-    marginHorizontal: 5,
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 8,
-    elevation: 2,
-    marginVertical: 5, // Add vertical margin
-  },
-  image: {
-    width: 150,
-    height: 210,
-  },
-});
 
 export default Home;

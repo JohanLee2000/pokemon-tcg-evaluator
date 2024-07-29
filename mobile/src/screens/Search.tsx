@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOpacity, Keyboard } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity, Keyboard } from 'react-native';
 import Modal from 'react-native-modal';
 import pokemon from '../configs/pokemon';
 import { Ionicons } from '@expo/vector-icons';
 import CardModal from 'src/components/CardModal';
 import { Card } from 'src/components/CardModal';
+import { styles } from 'src/assets/styles';
 
 
 const Search = () => {
@@ -119,76 +120,5 @@ const Search = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 16,
-    paddingHorizontal: 5,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 3,
-    paddingHorizontal: 10,
-  },
-  inputContainer: {
-    marginHorizontal: 4,
-  },
-  filterContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 3,
-  },
-  filterContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  filterLabel: {
-    marginRight: 7,
-    paddingHorizontal: 10,
-    fontSize: 16,
-  },
-  filterText: {
-    marginRight: 5,
-    fontSize: 16,
-  },
-  buttonContainer: {
-    paddingHorizontal: 30,
-    
-  },
-  card: {
-    flex: 1,
-    alignItems: 'center',
-    marginBottom: 10,
-    marginHorizontal: 5,
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 8,
-    elevation: 2,
-  },
-  image: {
-    width: 150,
-    height: 210,
-  },
-  row: {
-    justifyContent: 'space-between',
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-});
 
 export default Search;
