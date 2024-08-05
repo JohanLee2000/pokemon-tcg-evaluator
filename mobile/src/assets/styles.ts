@@ -72,10 +72,13 @@ import { StyleSheet } from 'react-native';
 	  fontWeight: 'bold',
 	  marginBottom: 10,
 	},
+	flatListContainer: {
+		height: 260, // Set a specific height for the FlatList container
+	  },
 	container2: {
 		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center',
+		justifyContent: 'flex-start',
 		paddingVertical: 20, // Adjust the padding as needed
 	  },
 	  title: {
