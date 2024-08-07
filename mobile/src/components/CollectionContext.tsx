@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { Card } from './CardModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 
 type CollectionContextType = {
@@ -48,7 +49,7 @@ export const CollectionProvider: React.FC<{ children: ReactNode }> = ({ children
     if (!cardExists) {
       setCollection(prevCollection => [...prevCollection, card]);
     } else {
-      console.log('Card already exists in the collection'); // Handle this case as needed
+		Alert.alert('','Card already exists in the collection', [{ text: 'OK' }]);
     }
   };
 

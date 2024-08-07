@@ -104,8 +104,8 @@ const Search = () => {
         onBackButtonPress={() => setFilterModalVisible(false)}
         style={styles.modal}
       >
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Filter by</Text>
+          <View style={styles.filterModalContainer}>
+            <Text style={styles.filterModalTitle}>Filter by</Text>
             <Button title="Name" onPress={() => applyFilter('Name')} />
             <Button title="Series" onPress={() => applyFilter('Series')} />
             <Button title="Types" onPress={() => applyFilter('Types')} />

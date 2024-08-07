@@ -1,7 +1,7 @@
 //When clicked, card modal pops up with card information. Can be used in collections, featured cards, search results, cart.
 // CardModal.tsx
 import React from 'react';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { styles } from 'src/assets/styles';
 import { useCollection } from './CollectionContext'; // Adjust the path as necessary
@@ -86,7 +86,7 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
       onBackButtonPress={onClose}
       style={styles.modal}
     >
-      <View style={styles.modalContainer2}>
+      <View style={styles.cardModalContainer}>
         <Text style={styles.title}>{card.name}</Text>
         <Image source={{ uri: card.images.large }} style={styles.cardImage} />
         {/* Add more card details here */}
@@ -110,9 +110,17 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
         <Text>Release Date: {card.set.releaseDate}</Text>
         <Text>Set: {card.set.id} ({card.number}/{card.set.printedTotal}) </Text> 
         <Image source={{ uri: card.set.images.symbol }} style={styles.logoImage} resizeMode='contain' />
-        {!isCardInCollection && <Button title="Add to Collection" onPress={handleAddToCollection} color={'#419a49'} />}
-        {isCardInCollection && <Button title="Remove from Collection" onPress={handleRemoveFromCollection} color={'red'} />}
-        <Button title="Close" onPress={onClose} />
+        {/* Buttons */}
+        {!isCardInCollection && <TouchableOpacity style={styles.addButton} onPress={handleAddToCollection}>
+          <Text style={styles.buttonText}>Add to Collection</Text>
+        </TouchableOpacity>}
+        {isCardInCollection && <TouchableOpacity style={styles.removeButton} onPress={handleRemoveFromCollection}>
+          <Text style={styles.buttonText}>Remove From Collection</Text>
+        </TouchableOpacity>}
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Text style={styles.buttonText}>Close</Text>
+        </TouchableOpacity>
+        
       </View>
     </Modal>
   );

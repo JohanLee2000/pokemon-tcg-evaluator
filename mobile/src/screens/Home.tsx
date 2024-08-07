@@ -53,7 +53,7 @@ function Home() {
   };
 
   return (
-    <View style={styles.container2}>
+    <View style={styles.homeContainer}>
       <Text style={styles.title}>Featured Roulette</Text>
         <View style={styles.flatListContainer}>
           <FlatList
@@ -61,7 +61,7 @@ function Home() {
             horizontal
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
-              <View style={styles.card2}>
+              <View style={styles.rouletteCard}>
                 <TouchableOpacity onPress={() => openCardModal(item)}>
                   <Image source={{ uri: item.images.small }} style={styles.image} />
                 </TouchableOpacity>
@@ -78,7 +78,7 @@ function Home() {
             horizontal
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
-              <View style={styles.card2}>
+              <View style={styles.rouletteCard}>
                 <TouchableOpacity onPress={() => openCardModal(item)}>
                   <Image source={{ uri: item.images.small }} style={styles.image} />
                 </TouchableOpacity>

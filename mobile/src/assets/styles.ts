@@ -38,7 +38,6 @@ import { StyleSheet } from 'react-native';
 	},
 	buttonContainer: {
 	  paddingHorizontal: 30,
-	  
 	},
 	card: {
 	  flex: 1,
@@ -61,13 +60,13 @@ import { StyleSheet } from 'react-native';
 	  justifyContent: 'center',
 	  alignItems: 'center',
 	},
-	modalContainer: {
+	filterModalContainer: {
 	  backgroundColor: 'white',
 	  padding: 20,
 	  borderRadius: 10,
 	  width: '80%',
 	},
-	modalTitle: {
+	filterModalTitle: {
 	  fontSize: 18,
 	  fontWeight: 'bold',
 	  marginBottom: 10,
@@ -75,7 +74,7 @@ import { StyleSheet } from 'react-native';
 	flatListContainer: {
 		height: 260, // Set a specific height for the FlatList container
 	  },
-	container2: {
+	homeContainer: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'flex-start',
@@ -90,7 +89,7 @@ import { StyleSheet } from 'react-native';
 	  flatListContent: {
 		paddingVertical: 10, // Adjust the padding as needed
 	  },
-	  card2: {
+	  rouletteCard: {
 		flex: 1,
 		alignItems: 'center',
 		marginHorizontal: 5,
@@ -106,7 +105,7 @@ import { StyleSheet } from 'react-native';
 		resizeMode: 'contain',
 	  },
 	  //Card Modal
-	  modalContainer2: {
+	  cardModalContainer: {
 		backgroundColor: 'white',
 		padding: 20,
 		borderRadius: 10,
@@ -129,5 +128,49 @@ import { StyleSheet } from 'react-native';
 	  typeImage: {
 		width: 20,
 		height: 20,
+	  },
+	  //Buttons
+	  buttonText: {
+		fontSize: 14,
+		fontWeight: '500',
+		textTransform: 'uppercase',
+		color: 'white',
+	  },
+	  closeButton: {
+		// width: '40%',
+		paddingHorizontal: '7%',
+		paddingVertical: '3%',
+		marginTop: '2%',
+		elevation: 3,
+		borderRadius: 10,
+		alignSelf: 'center',
+		alignItems: 'center',
+        flexDirection: 'row', 
+		justifyContent: 'center', 
+		backgroundColor: '#0d94e8',
+	  },
+	  addButton: {
+		paddingHorizontal: '7%',
+		paddingVertical: '3%',
+		marginVertical: '1%',
+		elevation: 3,
+		borderRadius: 10,
+		alignSelf: 'center',
+		alignItems: 'center',
+        flexDirection: 'row', 
+		justifyContent: 'center', 
+		backgroundColor: '#009E60',
+	  },
+	  removeButton: {
+		paddingHorizontal: '7%',
+		paddingVertical: '3%',
+		marginVertical: '1%',
+		elevation: 3,
+		borderRadius: 10,
+		alignSelf: 'center',
+		alignItems: 'center',
+        flexDirection: 'row', 
+		justifyContent: 'center', 
+		backgroundColor: 'red',
 	  },
   });
