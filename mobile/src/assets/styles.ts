@@ -85,6 +85,7 @@ import { StyleSheet } from 'react-native';
 		fontSize: 20,
 		fontWeight: 'bold',
 		marginBottom: 10,
+		alignSelf: 'center',
 	  },
 	  flatListContent: {
 		paddingVertical: 10, // Adjust the padding as needed
@@ -98,6 +99,11 @@ import { StyleSheet } from 'react-native';
 		borderRadius: 8,
 		elevation: 2,
 		marginVertical: 5, // Add vertical margin
+	  },
+	  collectionCardImage: {
+		width: '100%',
+		height: 200, // Adjust height as needed
+		resizeMode: 'contain',
 	  },
 	  //Card Modal
 	  modalContainer2: {

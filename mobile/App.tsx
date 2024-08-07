@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { PaperProvider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { CollectionProvider } from './src/components/CollectionContext'; 
+
 import Home from './src/screens/Home';
 import Cart from './src/screens/Cart';
 import Cards from './src/screens/Cards';
@@ -51,56 +53,58 @@ const CartStack = () => {
 
 export default function App() {
   return (
-    <PaperProvider theme={{ version: 2}}>
-      <NavigationContainer>
-        <Tab.Navigator 
-          activeColor="#f0edf6" 
-          inactiveColor="#3e2465" 
-          barStyle={{ backgroundColor: '#FF5733' }} //Initial tab bar color
-          shifting={true} 
-        >
-          <Tab.Screen
-            name="Home"
-            component={HomeStack}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="home" color={color} size={26} />
-              ),
-              tabBarColor: '#FF5733',
-            }}
-          />
-          <Tab.Screen
-            name="Search"
-            component={SearchStack}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="magnify" color={color} size={26} />
-              ),
-              tabBarColor: '#5982C2'
-            }}
-          />
-          <Tab.Screen
-            name="Cards"
-            component={CardsStack}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="cards" color={color} size={26} />
-              ),
-              tabBarColor: '#419a49'
-            }}
-          />
-          <Tab.Screen
-            name="Cart"
-            component={CartStack}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="cart" color={color} size={26} />
-              ),
-              tabBarColor: '#c3b091'
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <CollectionProvider>
+      <PaperProvider theme={{ version: 2}}>
+        <NavigationContainer>
+          <Tab.Navigator 
+            activeColor="#f0edf6" 
+            inactiveColor="#3e2465" 
+            barStyle={{ backgroundColor: '#FF5733' }} //Initial tab bar color
+            shifting={true} 
+          >
+            <Tab.Screen
+              name="Home"
+              component={HomeStack}
+              options={{
+                tabBarIcon: ({ color }) => (
+                  <MaterialCommunityIcons name="home" color={color} size={26} />
+                ),
+                tabBarColor: '#FF5733',
+              }}
+            />
+            <Tab.Screen
+              name="Search"
+              component={SearchStack}
+              options={{
+                tabBarIcon: ({ color }) => (
+                  <MaterialCommunityIcons name="magnify" color={color} size={26} />
+                ),
+                tabBarColor: '#5982C2'
+              }}
+            />
+            <Tab.Screen
+              name="Cards"
+              component={CardsStack}
+              options={{
+                tabBarIcon: ({ color }) => (
+                  <MaterialCommunityIcons name="cards" color={color} size={26} />
+                ),
+                tabBarColor: '#419a49'
+              }}
+            />
+            <Tab.Screen
+              name="Cart"
+              component={CartStack}
+              options={{
+                tabBarIcon: ({ color }) => (
+                  <MaterialCommunityIcons name="cart" color={color} size={26} />
+                ),
+                tabBarColor: '#c3b091'
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </CollectionProvider>
   );
 }
