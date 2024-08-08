@@ -15,6 +15,7 @@ type CollectionCartContextType = {
 
 const CollectionCartContext = createContext<CollectionCartContextType | undefined>(undefined);
 const COLLECTION_STORAGE_KEY = '@user_collection';
+const CART_STORAGE_KEY = '@user_cart';
 
 
 export const CollectionCartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -32,8 +33,19 @@ export const CollectionCartProvider: React.FC<{ children: ReactNode }> = ({ chil
         console.error('Failed to load collection from AsyncStorage', error);
       }
     };
+    const loadCart = async () => {
+      try {
+        const storedCart = await AsyncStorage.getItem(CART_STORAGE_KEY);
+        if (storedCart) {
+          setCart(JSON.parse(storedCart));
+        }
+      } catch (error) {
+        console.error('Failed to load cart from AsyncStorage', error);
+      }
+    };
 
     loadCollection();
+    loadCart();
   }, []);
 
   useEffect(() => {
@@ -44,9 +56,17 @@ export const CollectionCartProvider: React.FC<{ children: ReactNode }> = ({ chil
         console.error('Failed to save collection to AsyncStorage', error);
       }
     };
+    const saveCart = async () => {
+      try {
+        await AsyncStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+      } catch (error) {
+        console.error('Failed to save cart to AsyncStorage', error);
+      }
+    };
 
     saveCollection();
-  }, [collection]);
+    saveCart();
+  }, [collection, cart]);
 
   const addToCollection = (card: Card) => {
     const cardExists = collection.some(existingCard => existingCard.id === card.id);
