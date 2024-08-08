@@ -1,10 +1,11 @@
 //When clicked, card modal pops up with card information. Can be used in collections, featured cards, search results, cart.
 // CardModal.tsx
 import React from 'react';
-import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
-import { styles } from 'src/assets/styles';
-import { useCollection } from './CollectionContext'; // Adjust the path as necessary
+import { colors, styles } from 'src/assets/styles';
+import { useCollectionCart } from './CollectionCartContext'; // Adjust the path as necessary
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { fireSymbol, waterSymbol, grassSymbol, darkSymbol, dragonSymbol, electricSymbol, fairySymbol, fightingSymbol, normalSymbol, psychicSymbol, metalSymbol } from "../assets/images"
 
@@ -51,8 +52,8 @@ type CardModalProps = {
 const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
   if (!card) return null;
 
-  //Collection handling
-  const { collection, addToCollection, removeFromCollection } = useCollection();
+  //Collection and Cart handling
+  const { collection, cart, addToCollection, removeFromCollection, addToCart, removeFromCart } = useCollectionCart();
   const handleAddToCollection = () => {
     addToCollection(card);
     onClose();
@@ -61,9 +62,17 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
     removeFromCollection(card.id);
     onClose();
   };
+  const handleAddToCart = () => {
+    addToCart(card);
+    onClose();
+  };
+  const handleRemoveFromCart = () => {
+    removeFromCart(card.id);
+    onClose();
+  };
   const isCardInCollection = collection.some(c => c.id === card.id);
+  const isCardInCart = cart.some(c => c.id === card.id);
 
-  const attackNames = card.attacks?.map(attack => attack.name).join(', ');
 
   const typeImages = {
     Fire: fireSymbol,
@@ -87,7 +96,16 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
       style={styles.modal}
     >
       <View style={styles.cardModalContainer}>
+
+        {/* Cart Buttons */}
         <Text style={styles.title}>{card.name}</Text>
+        {!isCardInCart && <TouchableOpacity style={styles.cartAddButton} onPress={handleAddToCart}>
+          <MaterialCommunityIcons name="cart" color='white' size={20} />
+        </TouchableOpacity>}
+        {isCardInCart && <TouchableOpacity style={styles.cartRemoveButton} onPress={handleRemoveFromCart}>
+          <MaterialCommunityIcons name="cart" color='white' size={20} />
+        </TouchableOpacity>}
+
         <Image source={{ uri: card.images.large }} style={styles.cardImage} />
         {/* Add more card details here */}
         <Text>Market Price: ${card.cardmarket?.prices.averageSellPrice ?? 'N/A'}</Text>
@@ -99,17 +117,13 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
             ))}
           </View>
         
-        {attackNames ? (
-              <Text>Attacks: {attackNames}</Text>
-            ) : (
-              <Text>No attacks found</Text>
-            )}
         {card.rarity ? <Text>Rarity: {card.rarity}</Text> : (<Text>Rarity not found</Text>)}
         <Text>Artist: {card.artist}</Text>
         <Text>Pokedex: #{card.nationalPokedexNumbers}</Text>
         <Text>Release Date: {card.set.releaseDate}</Text>
         <Text>Set: {card.set.id} ({card.number}/{card.set.printedTotal}) </Text> 
         <Image source={{ uri: card.set.images.symbol }} style={styles.logoImage} resizeMode='contain' />
+
         {/* Buttons */}
         {!isCardInCollection && <TouchableOpacity style={styles.addButton} onPress={handleAddToCollection}>
           <Text style={styles.buttonText}>Add to Collection</Text>
@@ -117,6 +131,7 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
         {isCardInCollection && <TouchableOpacity style={styles.removeButton} onPress={handleRemoveFromCollection}>
           <Text style={styles.buttonText}>Remove From Collection</Text>
         </TouchableOpacity>}
+
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Text style={styles.buttonText}>Close</Text>
         </TouchableOpacity>

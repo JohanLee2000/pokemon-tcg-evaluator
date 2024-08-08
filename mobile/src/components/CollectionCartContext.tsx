@@ -4,18 +4,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 
 
-type CollectionContextType = {
+type CollectionCartContextType = {
   collection: Card[];
+  cart: Card[];
   addToCollection: (card: Card) => void;
   removeFromCollection: (cardId: string) => void;
+  addToCart: (card: Card) => void;
+  removeFromCart: (cardId: string) => void;
 };
 
-const CollectionContext = createContext<CollectionContextType | undefined>(undefined);
+const CollectionCartContext = createContext<CollectionCartContextType | undefined>(undefined);
 const COLLECTION_STORAGE_KEY = '@user_collection';
 
 
-export const CollectionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const CollectionCartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [collection, setCollection] = useState<Card[]>([]);
+  const [cart, setCart] = useState<Card[]>([]);
 
   useEffect(() => {
     const loadCollection = async () => {
@@ -57,17 +61,30 @@ export const CollectionProvider: React.FC<{ children: ReactNode }> = ({ children
     setCollection((prevCollection) => prevCollection.filter(card => card.id !== cardId));
   };
 
+  const addToCart = (card: Card) => {
+    const cardExists = cart.some(existingCard => existingCard.id === card.id);
+    if (!cardExists) {
+      setCart(prevCart => [...prevCart, card]);
+    } else {
+		Alert.alert('','Card has already been added to the cart', [{ text: 'OK' }]);
+    }
+  };
+
+  const removeFromCart = (cardId: string) => {
+    setCart(prevCart => prevCart.filter(card => card.id !== cardId));
+  };
+
   return (
-    <CollectionContext.Provider value={{ collection, addToCollection, removeFromCollection }}>
+    <CollectionCartContext.Provider value={{ collection, cart, addToCollection, removeFromCollection, addToCart, removeFromCart }}>
       {children}
-    </CollectionContext.Provider>
+    </CollectionCartContext.Provider>
   );
 };
 
-export const useCollection = (): CollectionContextType => {
-  const context = useContext(CollectionContext);
+export const useCollectionCart = (): CollectionCartContextType => {
+  const context = useContext(CollectionCartContext);
   if (!context) {
-    throw new Error('useCollection must be used within a CollectionProvider');
+    throw new Error('useCollection must be used within a CollectionCartProvider');
   }
   return context;
 };

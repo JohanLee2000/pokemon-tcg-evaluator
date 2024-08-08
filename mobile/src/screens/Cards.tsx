@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import { useCollection } from '../components/CollectionContext'; // Adjust the path as necessary
+import { useCollectionCart } from '../components/CollectionCartContext'; // Adjust the path as necessary
 import { styles } from 'src/assets/styles';
 import CardModal from 'src/components/CardModal';
 import { Card } from 'src/components/CardModal';
 
 const Cards: React.FC = () => {
-  const { collection } = useCollection();
+  const { collection } = useCollectionCart();
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [cardModalVisible, setCardModalVisible] = useState(false);
 

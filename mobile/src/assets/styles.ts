@@ -1,6 +1,14 @@
 //Define common styles for project-wide usage
 import { StyleSheet } from 'react-native';
 
+ export const colors = {
+	green: '#419a49',
+	orange: '#FF5733',
+	beige: '#c3b091',
+	blue: '#5982C2',
+	lightBlue: '#0d94e8',
+	addGreen: '#009E60',
+}
 
  export const styles = StyleSheet.create({
 	container: {
@@ -137,7 +145,6 @@ import { StyleSheet } from 'react-native';
 		color: 'white',
 	  },
 	  closeButton: {
-		// width: '40%',
 		paddingHorizontal: '7%',
 		paddingVertical: '3%',
 		marginTop: '2%',
@@ -147,7 +154,7 @@ import { StyleSheet } from 'react-native';
 		alignItems: 'center',
         flexDirection: 'row', 
 		justifyContent: 'center', 
-		backgroundColor: '#0d94e8',
+		backgroundColor: colors.lightBlue,
 	  },
 	  addButton: {
 		paddingHorizontal: '7%',
@@ -159,7 +166,7 @@ import { StyleSheet } from 'react-native';
 		alignItems: 'center',
         flexDirection: 'row', 
 		justifyContent: 'center', 
-		backgroundColor: '#009E60',
+		backgroundColor: colors.addGreen,
 	  },
 	  removeButton: {
 		paddingHorizontal: '7%',
@@ -171,6 +178,26 @@ import { StyleSheet } from 'react-native';
 		alignItems: 'center',
         flexDirection: 'row', 
 		justifyContent: 'center', 
+		backgroundColor: 'red',
+	  },
+	  cartAddButton: {
+		position: 'absolute',
+		top: '2%',
+		right: '4%',
+		paddingHorizontal: '3%',
+		paddingVertical: '2%',
+		elevation: 3,
+		borderRadius: 10,
+		backgroundColor: colors.addGreen,
+	  },
+	  cartRemoveButton: {
+		position: 'absolute',
+		top: '2%',
+		right: '4%',
+		paddingHorizontal: '3%',
+		paddingVertical: '2%',
+		elevation: 3,
+		borderRadius: 10,
 		backgroundColor: 'red',
 	  },
   });
