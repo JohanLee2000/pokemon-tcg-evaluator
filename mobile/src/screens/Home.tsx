@@ -16,7 +16,7 @@ function Home() {
       try {
         // Card Roulette
         let rouletteResults: Card[] = [];
-        const rouletteQueries = ['charizard', 'darkrai', 'luxray', 'salamence', 'klang', 'swinub', 'gardevoir', 'mewtwo', 'dragonite', 'arceus', 'haunter', 'gible', 'cufant', 'escavalier', 'golurk', 'spheal', 'venomoth', 'riolu', 'trubbish', 'charcadet', 'skamory', 'torkoal', 'groudon', 'zapdos', 'aggron', 'mantine'];
+        const rouletteQueries = ['charizard', 'darkrai', 'luxray', 'salamence', 'klang', 'swinub', 'gardevoir', 'mewtwo', 'dragonite', 'arceus', 'haunter', 'gible', 'cufant', 'escavalier', 'golurk', 'spheal', 'venomoth', 'riolu', 'trubbish', 'charcadet', 'skarmory', 'torkoal', 'groudon', 'zapdos', 'aggron', 'mantine', 'kingdra', 'rhyperior'];
 
         //Randomly select 5 pokemon from the list
         const selectedQueries = [];

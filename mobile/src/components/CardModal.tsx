@@ -32,7 +32,7 @@ export type Card = {
   tcgplayer?: {
     url: string;
     prices: {
-      normal: {
+      holofoil: {
         market: number;
       }
     }

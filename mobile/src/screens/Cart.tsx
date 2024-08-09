@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Linking } from 'react-native';
+
 import { useCollectionCart } from '../components/CollectionCartContext'; // Adjust the path as necessary
 import { styles } from 'src/assets/styles';
 import CardModal from 'src/components/CardModal';
@@ -13,12 +15,16 @@ function Cart() {
 	const openCardModal = (card: Card) => {
 	  setSelectedCard(card);
 	  setCardModalVisible(true);
+	  console.log(card);
 	};
   
 	const closeCardModal = () => {
 	  setCardModalVisible(false);
 	  setSelectedCard(null);
 	};
+	const handleOpenURL = (url: string) => {
+		Linking.openURL(url);
+	  };
   
 	return (
 	  <View style={styles.container}>
@@ -35,10 +41,24 @@ function Cart() {
 					<Text style={styles.cartRowText}>{item.name}</Text>
 				</View>
 				<View style={styles.cartRowInfo}>
-					<Text style={styles.cartRowText}>Cardmarket Price</Text>
-					<Text>${item.cardmarket?.prices.averageSellPrice}</Text>
-					{/* <Text style={styles.cartRowText}>TCGPlayer Price</Text>
-					<Text>${item.tcgplayer?.prices.normal.market}</Text> */}
+					{/* Cardmarket Price Link */}
+					{item.cardmarket?.url && (
+					<View>
+						<Text style={styles.cartRowText}>Cardmarket Price</Text>
+						<TouchableOpacity onPress={() => handleOpenURL(item.cardmarket.url)}>
+							<Text style={styles.urlText}>${item.cardmarket?.prices.averageSellPrice ?? 'N/A'}</Text>
+						</TouchableOpacity>
+					</View>
+					)}
+					{/* TCGPlayer Price Link */}
+					{item.tcgplayer?.url && (
+					<View>
+						<Text style={styles.cartRowText}>TCGPlayer Price</Text>
+						<TouchableOpacity onPress={() => handleOpenURL(item.tcgplayer.url)}>
+							<Text style={styles.urlText}>${item.tcgplayer?.prices.holofoil.market ?? 'N/A'}</Text>
+						</TouchableOpacity>
+					</View>
+					)}
 				</View>
 			  </View>
 			)}

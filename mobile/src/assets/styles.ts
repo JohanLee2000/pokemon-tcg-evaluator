@@ -226,4 +226,8 @@ import { StyleSheet } from 'react-native';
 		fontSize: 14,
 		textAlign: 'left',
 	  },
+	  urlText: {
+		color: 'blue',
+		textDecorationLine: 'underline',
+	  },
   });
