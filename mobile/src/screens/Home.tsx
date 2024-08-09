@@ -16,9 +16,18 @@ function Home() {
       try {
         // Card Roulette
         let rouletteResults: Card[] = [];
-        const rouletteQueries = ['charizard', 'darkrai', 'luxray', 'salamence'];
+        const rouletteQueries = ['charizard', 'darkrai', 'luxray', 'salamence', 'klang', 'swinub', 'gardevoir', 'mewtwo', 'dragonite', 'arceus', 'haunter', 'gible', 'cufant', 'escavalier', 'golurk', 'spheal', 'venomoth', 'riolu', 'trubbish', 'charcadet', 'skamory', 'torkoal', 'groudon', 'zapdos', 'aggron', 'mantine'];
 
-        for (const query of rouletteQueries) {
+        //Randomly select 5 pokemon from the list
+        const selectedQueries = [];
+        while (selectedQueries.length < 5) {
+          const randomIndex = Math.floor(Math.random() * rouletteQueries.length);
+          const selectedQuery = rouletteQueries[randomIndex];
+          if (!selectedQueries.includes(selectedQuery)) {
+            selectedQueries.push(selectedQuery);
+          }
+        }
+        for (const query of selectedQueries) {
           const result = await pokemon.card.where({ q: `name:${query}`, pageSize: 1});
           rouletteResults = [...rouletteResults, ...result.data];
         }

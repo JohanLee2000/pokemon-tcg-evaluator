@@ -200,4 +200,30 @@ import { StyleSheet } from 'react-native';
 		borderRadius: 10,
 		backgroundColor: 'red',
 	  },
+	  //Cart
+	  cartImage: {
+		width: 90,
+		height: 126,
+		resizeMode: 'contain',
+		marginLeft: 10,
+	  },
+	  cartRows: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginBottom: 10,
+		marginHorizontal: 5,
+		backgroundColor: '#fff',
+		paddingVertical: 10,
+		borderRadius: 8,
+		elevation: 2,
+	  },
+	  cartRowInfo: {
+		marginRight: 10,
+		justifyContent: 'center',
+	  },
+	  cartRowText: {
+		fontWeight: 'bold',
+		fontSize: 14,
+		textAlign: 'left',
+	  },
   });

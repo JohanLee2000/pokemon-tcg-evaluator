@@ -27,14 +27,21 @@ function Cart() {
 			data={cart}
 			keyExtractor={item => item.id}
 			renderItem={({ item }) => (
-			  <View style={styles.card}>
+			  <View style={styles.cartRows}>
 				<TouchableOpacity onPress={() => openCardModal(item)}>
-				  <Image source={{ uri: item.images.small }} style={styles.image} />
+				  <Image source={{ uri: item.images.small }} style={styles.cartImage} />
 				</TouchableOpacity>
+				<View style={styles.cartRowInfo}>
+					<Text style={styles.cartRowText}>{item.name}</Text>
+				</View>
+				<View style={styles.cartRowInfo}>
+					<Text style={styles.cartRowText}>Cardmarket Price</Text>
+					<Text>${item.cardmarket?.prices.averageSellPrice}</Text>
+					{/* <Text style={styles.cartRowText}>TCGPlayer Price</Text>
+					<Text>${item.tcgplayer?.prices.normal.market}</Text> */}
+				</View>
 			  </View>
 			)}
-			numColumns={2}
-			columnWrapperStyle={styles.row} // Add a wrapper style for rows
 		  />
 		<CardModal
 		  isVisible={cardModalVisible}

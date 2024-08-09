@@ -24,10 +24,19 @@ export type Card = {
   number: number;
   rarity?: string;
   cardmarket?: {
+    url: string;
     prices: {
       averageSellPrice: number;
     };
   };
+  tcgplayer?: {
+    url: string;
+    prices: {
+      normal: {
+        market: number;
+      }
+    }
+  }
   attacks?: {
     name: string;
   }[];
