@@ -27,6 +27,10 @@ export type Card = {
     url: string;
     prices: {
       averageSellPrice: number;
+      avg1: number;
+      avg7: number;
+      avg30: number;
+      trendPrice: number;
     };
   };
   tcgplayer?: {
@@ -34,6 +38,9 @@ export type Card = {
     prices: {
       holofoil: {
         market: number;
+        low: number;
+        mid: number;
+        high: number;
       }
     }
   }
@@ -117,7 +124,7 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
 
         <Image source={{ uri: card.images.large }} style={styles.cardImage} />
         {/* Add more card details here */}
-        <Text>Market Price: ${card.cardmarket?.prices.averageSellPrice ?? 'N/A'}</Text>
+        {card.cardmarket?.prices.averageSellPrice ? <Text>Market Price: ${card.cardmarket?.prices.averageSellPrice}</Text> : <Text>Market Price: ${card.tcgplayer?.prices.holofoil.market ?? 'N/A'}</Text>}
         <Text>HP: {card.hp}</Text>
           <View style={styles.types}>
           <Text>Type: {card.types.join(', ')}</Text>

@@ -15,7 +15,6 @@ function Cart() {
 	const openCardModal = (card: Card) => {
 	  setSelectedCard(card);
 	  setCardModalVisible(true);
-	  console.log(card);
 	};
   
 	const closeCardModal = () => {
@@ -46,7 +45,7 @@ function Cart() {
 					<View>
 						<Text style={styles.cartRowText}>Cardmarket Price</Text>
 						<TouchableOpacity onPress={() => handleOpenURL(item.cardmarket.url)}>
-							<Text style={styles.urlText}>${item.cardmarket?.prices.averageSellPrice ?? 'N/A'}</Text>
+							<Text style={styles.urlText}>€{item.cardmarket?.prices.averageSellPrice ?? 'N/A'} | {item.cardmarket?.prices.avg1} | {item.cardmarket?.prices.trendPrice}</Text>
 						</TouchableOpacity>
 					</View>
 					)}
@@ -55,7 +54,7 @@ function Cart() {
 					<View>
 						<Text style={styles.cartRowText}>TCGPlayer Price</Text>
 						<TouchableOpacity onPress={() => handleOpenURL(item.tcgplayer.url)}>
-							<Text style={styles.urlText}>${item.tcgplayer?.prices.holofoil.market ?? 'N/A'}</Text>
+							<Text style={styles.urlText}>${item.tcgplayer?.prices.holofoil.market ?? 'N/A'} | {item.tcgplayer?.prices.holofoil.mid}</Text>
 						</TouchableOpacity>
 					</View>
 					)}
