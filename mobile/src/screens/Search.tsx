@@ -21,18 +21,32 @@ const Search = () => {
     setLoading(true);
     try {
       Keyboard.dismiss();
+      if (!query.trim()) {
+        // If the query is empty, set cards to an empty array and return early
+        setCards([]);
+        return;
+      }
+      let wildcardQuery = query.trim() + '*'; // Adding wildcard for partial matches
       let result;
       if (filter === 'Name') {
-        result = await pokemon.card.where({ q: `name:${query}` });
+        result = await pokemon.card.where({ q: `name:${wildcardQuery}` });
       } else if (filter === 'Series') {
-        result = await pokemon.set.where({ q: `series:${query}` });
+        result = await pokemon.set.where({ q: `series:${wildcardQuery}` });
       } else if (filter === 'Types') {
-        result = await pokemon.card.where({ q: `types:${query}` });
+        result = await pokemon.card.where({ q: `types:${wildcardQuery}` });
       }
-      setCards(result.data);
-      console.log(result.data[0]);
+      if (result.data.length === 0) {
+        // If no cards are found, set cards to an empty array
+        console.log('Search term did not match anything in database. Try a different search.');
+        setCards([]);
+      } else {
+        // Otherwise, set the found cards
+        setCards(result.data);
+        // console.log(result.data[0]);
+      }
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      setCards([]); //Set cards to empty array in case of error
     } finally {
       setLoading(false);
     }
