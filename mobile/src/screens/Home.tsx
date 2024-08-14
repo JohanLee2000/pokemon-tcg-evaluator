@@ -20,7 +20,7 @@ function Home() {
 
         //Randomly select 5 pokemon from the list
         const selectedQueries = [];
-        while (selectedQueries.length < 5) {
+        while (selectedQueries.length < 6) {
           const randomIndex = Math.floor(Math.random() * rouletteQueries.length);
           const selectedQuery = rouletteQueries[randomIndex];
           if (!selectedQueries.includes(selectedQuery)) {
@@ -35,7 +35,7 @@ function Home() {
 
         // Valuable Cards
         let valuableResults: Card[] = [];
-        const valuableQueries = ['swsh12pt5-37', 'xy7-92', 'sm5-100', 'bw8-95', 'xy1-2'];
+        const valuableQueries = ['swsh12pt5-37', 'xy7-92', 'swsh35-71', 'sm5-100', 'bw8-95', 'xy1-2'];
 
         for (const query of valuableQueries) {
           const result = await pokemon.card.find(query);

@@ -11,93 +11,65 @@ import { StyleSheet } from 'react-native';
 }
 
  export const styles = StyleSheet.create({
+	//Containers
 	container: {
-	  flex: 1,
-	  paddingTop: 16,
-	  paddingHorizontal: 5,
-	},
-	input: {
-	  height: 40,
-	  borderColor: 'gray',
-	  borderWidth: 1,
-	  marginBottom: 3,
-	  paddingHorizontal: 10,
+		flex: 1,
+		paddingTop: 16,
+		paddingHorizontal: 5,
 	},
 	inputContainer: {
-	  marginHorizontal: 4,
-	},
-	filterContainer: {
-	  flexDirection: 'row',
-	  alignItems: 'center',
-	  marginBottom: 3,
-	},
-	filterContent: {
-	  flexDirection: 'row',
-	  alignItems: 'center',
-	},
-	filterLabel: {
-	  marginRight: 7,
-	  paddingHorizontal: 10,
-	  fontSize: 16,
-	},
-	filterText: {
-	  marginRight: 5,
-	  fontSize: 16,
+		marginHorizontal: 4,
 	},
 	buttonContainer: {
-	  paddingHorizontal: 30,
-	},
-	card: {
-	  flex: 1,
-	  alignItems: 'center',
-	  marginBottom: 10,
-	  marginHorizontal: 5,
-	  backgroundColor: '#fff',
-	  padding: 10,
-	  borderRadius: 8,
-	  elevation: 2,
-	},
-	image: {
-	  width: 150,
-	  height: 210,
-	},
-	row: {
-	  justifyContent: 'space-between',
-	},
-	modal: {
-	  justifyContent: 'center',
-	  alignItems: 'center',
-	},
-	filterModalContainer: {
-	  backgroundColor: 'white',
-	  padding: 20,
-	  borderRadius: 10,
-	  width: '80%',
-	},
-	filterModalTitle: {
-	  fontSize: 18,
-	  fontWeight: 'bold',
-	  marginBottom: 10,
+		paddingHorizontal: 30,
 	},
 	flatListContainer: {
 		height: 260, // Set a specific height for the FlatList container
-	  },
+	},
 	homeContainer: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		paddingVertical: 20, // Adjust the padding as needed
+	},
+	input: {
+		height: 40,
+		borderColor: 'gray',
+		borderWidth: 1,
+		marginBottom: 3,
+		paddingHorizontal: 10,
 	  },
-	  title: {
+	card: {
+		flex: 1,
+		alignItems: 'center',
+		marginBottom: 10,
+		marginHorizontal: 5,
+		backgroundColor: '#fff',
+		padding: 10,
+	    borderRadius: 8,
+	    elevation: 2,
+	},
+	image: {
+	    width: 150,
+	    height: 210,
+	},
+	row: {
+	    justifyContent: 'space-between',
+	},
+	modal: {
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	},
+	title: {
 		fontSize: 20,
 		fontWeight: 'bold',
 		marginBottom: 10,
 		alignSelf: 'center',
-	  },
-	  flatListContent: {
+	},
+	flatListContent: {
 		paddingVertical: 10, // Adjust the padding as needed
-	  },
-	  rouletteCard: {
+	},
+	rouletteCard: {
 		flex: 1,
 		alignItems: 'center',
 		marginHorizontal: 5,
@@ -106,45 +78,70 @@ import { StyleSheet } from 'react-native';
 		borderRadius: 8,
 		elevation: 2,
 		marginVertical: 5, // Add vertical margin
-	  },
-	  collectionCardImage: {
-		width: '100%',
-		height: 200, // Adjust height as needed
-		resizeMode: 'contain',
-	  },
-	  //Card Modal
-	  cardModalContainer: {
+	},
+	//Filter
+	filterContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginBottom: 4,
+	},
+	filterContent: {
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
+	filterLabel: {
+		marginRight: 7,
+		paddingHorizontal: 10,
+		fontSize: 16,
+	},
+	filterText: {
+		marginRight: 5,
+		fontSize: 16,
+	},
+	filterModalContainer: {
+		backgroundColor: 'white',
+		padding: 20,
+		borderRadius: 10,
+		width: '80%',
+	},
+	filterModalTitle: {
+		fontSize: 18,
+		fontWeight: 'bold',
+		marginBottom: 10,
+	},
+	//Card Modal
+	cardModalContainer: {
 		backgroundColor: 'white',
 		padding: 20,
 		borderRadius: 10,
 		width: '80%',
 		alignItems: 'center',
-	  },
-	  cardImage: {
+	},
+	cardImage: {
 		width: 200,
 		height: 280,
 		marginBottom: 10,
-	  },
-	  logoImage: {
-		  width: 50,
+	},
+	logoImage: {
+		width: 50,
 		height: 50,
-	  },
-	  types: {
+	},
+	types: {
 		flexDirection: 'row',
 		alignItems: 'center',
-	  },
-	  typeImage: {
+	},
+	typeImage: {
 		width: 20,
 		height: 20,
-	  },
-	  //Buttons
-	  buttonText: {
+	},
+	//Buttons
+	buttonText: {
 		fontSize: 14,
 		fontWeight: '500',
 		textTransform: 'uppercase',
 		color: 'white',
-	  },
-	  closeButton: {
+	},
+	closeButton: {
 		paddingHorizontal: '7%',
 		paddingVertical: '3%',
 		marginTop: '2%',
@@ -155,8 +152,8 @@ import { StyleSheet } from 'react-native';
         flexDirection: 'row', 
 		justifyContent: 'center', 
 		backgroundColor: colors.lightBlue,
-	  },
-	  addButton: {
+	},
+	addButton: {
 		paddingHorizontal: '7%',
 		paddingVertical: '3%',
 		marginVertical: '1%',
@@ -167,8 +164,8 @@ import { StyleSheet } from 'react-native';
         flexDirection: 'row', 
 		justifyContent: 'center', 
 		backgroundColor: colors.addGreen,
-	  },
-	  removeButton: {
+	},
+	removeButton: {
 		paddingHorizontal: '7%',
 		paddingVertical: '3%',
 		marginVertical: '1%',
@@ -179,8 +176,8 @@ import { StyleSheet } from 'react-native';
         flexDirection: 'row', 
 		justifyContent: 'center', 
 		backgroundColor: 'red',
-	  },
-	  cartAddButton: {
+	},
+	cartAddButton: {
 		position: 'absolute',
 		top: '2%',
 		right: '4%',
@@ -189,8 +186,8 @@ import { StyleSheet } from 'react-native';
 		elevation: 3,
 		borderRadius: 10,
 		backgroundColor: colors.addGreen,
-	  },
-	  cartRemoveButton: {
+	},
+	cartRemoveButton: {
 		position: 'absolute',
 		top: '2%',
 		right: '4%',
@@ -199,15 +196,15 @@ import { StyleSheet } from 'react-native';
 		elevation: 3,
 		borderRadius: 10,
 		backgroundColor: 'red',
-	  },
-	  //Cart
-	  cartImage: {
+	},
+	//Cart
+	cartImage: {
 		width: 90,
 		height: 126,
 		resizeMode: 'contain',
 		marginLeft: 10,
-	  },
-	  cartRows: {
+	},
+	cartRows: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		marginBottom: 10,
@@ -216,18 +213,18 @@ import { StyleSheet } from 'react-native';
 		paddingVertical: 10,
 		borderRadius: 8,
 		elevation: 2,
-	  },
-	  cartRowInfo: {
+	},
+	cartRowInfo: {
 		marginRight: 10,
 		justifyContent: 'center',
-	  },
-	  cartRowText: {
+	},
+	cartRowText: {
 		fontWeight: 'bold',
 		fontSize: 14,
 		textAlign: 'left',
-	  },
-	  urlText: {
+	},
+	urlText: {
 		color: 'blue',
 		textDecorationLine: 'underline',
-	  },
+	},
   });

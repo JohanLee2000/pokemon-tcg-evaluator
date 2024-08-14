@@ -36,7 +36,7 @@ const Search = () => {
       } else if (filter === 'Types') {
         result = await pokemon.card.where({ q: `types:${wildcardQuery}` });
       } else if (filter === 'Rarity') {
-        result = await pokemon.card.where({ q: `rarity:"${rarityLevels[2]}"` }); //Rare Ultra etc. Map to it with radio button?
+        result = await pokemon.card.where({ q: `rarity:"${query}"` }); //Rare Ultra etc. Map to it with radio button?
       } else if (filter === 'HP') {
         result = await pokemon.card.where({ q: `hp:[240 TO *]` });
       }
@@ -57,10 +57,13 @@ const Search = () => {
     }
   };
 
-  const applyFilter = (selectedFilter: string) => {
-    setFilter(selectedFilter);
-    setFilterModalVisible(false);
-  };
+  const applyFilter = (selectedFilter: string, value?: string) => {
+  if (selectedFilter === 'Rarity' && value) {
+    setQuery(value); // Set the query to the selected rarity level
+  }
+  setFilter(selectedFilter);
+  setFilterModalVisible(false);
+};
 
   const openCardModal = (card: Card) => {
     setSelectedCard(card);
