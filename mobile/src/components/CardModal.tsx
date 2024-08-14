@@ -17,11 +17,11 @@ export type Card = {
     small: string;
     large: string;
   };
-  hp: string;
-  types: string[];
-  artist: string;
-  nationalPokedexNumbers: number;
-  number: number;
+  hp?: string;
+  types?: string[];
+  artist?: string;
+  nationalPokedexNumbers?: number;
+  number?: number;
   rarity?: string;
   cardmarket?: {
     url: string;
@@ -44,9 +44,9 @@ export type Card = {
       }
     }
   }
-  attacks?: {
-    name: string;
-  }[];
+  // attacks?: {
+  //   name: string;
+  // }[];
   set?: {
     id: string;
     releaseDate: string;
@@ -124,22 +124,33 @@ const CardModal: React.FC<CardModalProps> = ({ isVisible, onClose, card }) => {
 
         <Image source={{ uri: card.images.large }} style={styles.cardImage} />
         {/* Add more card details here */}
-        {card.cardmarket?.prices.averageSellPrice ? <Text>Market Price: ${card.cardmarket?.prices.averageSellPrice}</Text> : <Text>Market Price: ${card.tcgplayer?.prices.holofoil.market ?? 'N/A'}</Text>}
-        <Text>HP: {card.hp}</Text>
+        <Text>
+          Market Price: $
+          {card.cardmarket?.prices.averageSellPrice || card.tcgplayer?.prices.holofoil.market || 'N/A'}
+        </Text>
+        
+        {card.hp && <Text>HP: {card.hp}</Text>}
+          {card.types && (
           <View style={styles.types}>
-          <Text>Type: {card.types.join(', ')}</Text>
+            <Text>Type: {card.types.join(', ')}</Text>
             {card.types.map((type, index) => (
-              <Image key={index} source={typeImages[type]} style={styles.typeImage} resizeMode='contain' />
+              <Image key={index} source={typeImages[type]} style={styles.typeImage} resizeMode="contain" />
             ))}
           </View>
+        )}
         
-        {card.rarity ? <Text>Rarity: {card.rarity}</Text> : (<Text>Rarity not found</Text>)}
-        <Text>Artist: {card.artist}</Text>
-        <Text>Pokedex: #{card.nationalPokedexNumbers}</Text>
-        <Text>Release Date: {card.set.releaseDate}</Text>
-        <Text>Set: {card.set.id} ({card.number}/{card.set.printedTotal}) </Text> 
-        <Image source={{ uri: card.set.images.symbol }} style={styles.logoImage} resizeMode='contain' />
-
+        {card.rarity && <Text>Rarity: {card.rarity}</Text>}
+        {card.artist && <Text>Artist: {card.artist}</Text>}
+        {card.nationalPokedexNumbers && <Text>Pokedex: #{card.nationalPokedexNumbers}</Text>}
+        {card.set && (
+          <>
+            <Text>Release Date: {card.set.releaseDate}</Text>
+            <Text>
+              Set: {card.set.id} ({card.number}/{card.set.printedTotal})
+            </Text>
+            <Image source={{ uri: card.set.images.symbol }} style={styles.logoImage} resizeMode="contain" />
+          </>
+        )}
         {/* Buttons */}
         {!isCardInCollection && <TouchableOpacity style={styles.addButton} onPress={handleAddToCollection}>
           <Text style={styles.buttonText}>Add to Collection</Text>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity, Keyboard } from 'react-native';
-import Modal from 'react-native-modal';
 import pokemon from '../configs/pokemon';
 import { Ionicons } from '@expo/vector-icons';
 import CardModal from 'src/components/CardModal';
 import { Card } from 'src/components/CardModal';
+import FilterModal from 'src/components/FilterModal';
 import { styles } from 'src/assets/styles';
 
 
@@ -16,6 +16,7 @@ const Search = () => {
   const [filterModalVisible, setFilterModalVisible] = useState(false); // State for modal visibility
   const [selectedCard, setSelectedCard] = useState<Card | null>(null); // State for selected card
   const [cardModalVisible, setCardModalVisible] = useState(false); // State for card modal visibility
+  const rarityLevels = ['Rare', 'Rare Holo GX', 'Rare Ultra'];
 
   const searchCards = async () => {
     setLoading(true);
@@ -34,6 +35,10 @@ const Search = () => {
         result = await pokemon.set.where({ q: `series:${wildcardQuery}` });
       } else if (filter === 'Types') {
         result = await pokemon.card.where({ q: `types:${wildcardQuery}` });
+      } else if (filter === 'Rarity') {
+        result = await pokemon.card.where({ q: `rarity:"${rarityLevels[2]}"` }); //Rare Ultra etc. Map to it with radio button?
+      } else if (filter === 'HP') {
+        result = await pokemon.card.where({ q: `hp:[240 TO *]` });
       }
       if (result.data.length === 0) {
         // If no cards are found, set cards to an empty array
@@ -42,7 +47,7 @@ const Search = () => {
       } else {
         // Otherwise, set the found cards
         setCards(result.data);
-        // console.log(result.data[0]);
+        console.log(result.data[0]);
       }
     } catch (error) {
       console.log(error);
@@ -110,21 +115,11 @@ const Search = () => {
         />
       )}
       {/* Filter Modal */}
-      <Modal
-        animationIn="pulse"
-        animationOut="bounceOut"
+      <FilterModal
         isVisible={filterModalVisible}
-        onBackdropPress={() => setFilterModalVisible(false)}
-        onBackButtonPress={() => setFilterModalVisible(false)}
-        style={styles.modal}
-      >
-          <View style={styles.filterModalContainer}>
-            <Text style={styles.filterModalTitle}>Filter by</Text>
-            <Button title="Name" onPress={() => applyFilter('Name')} />
-            <Button title="Series" onPress={() => applyFilter('Series')} />
-            <Button title="Types" onPress={() => applyFilter('Types')} />
-          </View>
-      </Modal>
+        onClose={() => setFilterModalVisible(false)}
+        applyFilter={applyFilter}
+      />
       <CardModal
         isVisible={cardModalVisible}
         onClose={closeCardModal}
