@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TouchableOpacity } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import { View, Text, Button } from 'react-native';
+import { Picker } from '@react-native-picker/picker'; 
 
 import Modal from 'react-native-modal';
 import { styles } from 'src/assets/styles';
@@ -36,6 +36,8 @@ const rarityLevels = [
   ];
 
 const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilter }) => {
+	const [selectedRarity, setSelectedRarity] = useState<string | undefined>();
+
 	return (
     <Modal
       animationIn="pulse"
@@ -52,16 +54,22 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilt
         <Button title="Types" onPress={() => applyFilter('Types')} />
         {/* Rarity Dropdown */}
         <Text style={styles.filterModalTitle}>Rarity</Text>
-        <RNPickerSelect
-          onValueChange={(value) => {
-            if (value) {
-              applyFilter('Rarity', value);
+        <Picker
+          selectedValue={selectedRarity}
+          style={styles.rarityPicker} 
+          onValueChange={(itemValue) => {
+            setSelectedRarity(itemValue);
+            if (itemValue) {
+              applyFilter('Rarity', itemValue);
               onClose(); // Close the modal after selection
             }
           }}
-          items={rarityLevels}
-          placeholder={{ label: "Select a Rarity", value: null }}
-        />
+        >
+          <Picker.Item label="Select a Rarity" value={null} />
+          {rarityLevels.map((rarity) => (
+            <Picker.Item label={rarity.label} value={rarity.value} key={rarity.value} style={styles.rarityPickerItem}/>
+          ))}
+        </Picker>
         <Button title="HP" onPress={() => applyFilter('HP')} />
       </View>
     </Modal>

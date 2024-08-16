@@ -109,6 +109,16 @@ import { StyleSheet } from 'react-native';
 		fontWeight: 'bold',
 		marginBottom: 10,
 	},
+	rarityPicker: {
+		width: '100%',
+		color: 'black', 
+		borderColor: 'gray', 
+		borderWidth: 1, 
+	},
+	rarityPickerItem: {
+		color: 'black',
+		fontSize: 16,        // Font size of the items
+	},
 	//Card Modal
 	cardModalContainer: {
 		backgroundColor: 'white',
