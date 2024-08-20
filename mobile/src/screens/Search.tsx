@@ -16,7 +16,6 @@ const Search = () => {
   const [filterModalVisible, setFilterModalVisible] = useState(false); // State for modal visibility
   const [selectedCard, setSelectedCard] = useState<Card | null>(null); // State for selected card
   const [cardModalVisible, setCardModalVisible] = useState(false); // State for card modal visibility
-  const rarityLevels = ['Rare', 'Rare Holo GX', 'Rare Ultra'];
 
   const searchCards = async () => {
     setLoading(true);
@@ -58,7 +57,7 @@ const Search = () => {
   };
 
   const applyFilter = (selectedFilter: string, value?: string) => {
-  if (selectedFilter === 'Rarity' && value) {
+  if ((selectedFilter === 'Rarity' || selectedFilter === 'Types') && value) {
     setQuery(value); // Set the query to the selected rarity level
   }
   setFilter(selectedFilter);

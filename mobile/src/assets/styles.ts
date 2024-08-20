@@ -151,23 +151,28 @@ import { StyleSheet } from 'react-native';
 		padding: 10,
 		borderRadius: 4,
 		backgroundColor: 'white',
-	  },
-	  dropdownText: {
+	},
+	dropdownContent: {
+		flexDirection: 'row', 
+		justifyContent: 'space-between', // Space between text and icon
+		alignItems: 'center',
+	},
+	dropdownText: {
 		color: 'black',
-	  },
-	  dropdownListContainer: {
+	},
+	dropdownListContainer: {
 		borderWidth: 1,
 		borderColor: 'gray',
 		borderRadius: 4,
 		backgroundColor: 'white',
 		maxHeight: 150, // You can set a max height to control how tall the list gets
-	  },
-	  dropdownItem: {
+	},
+	dropdownItem: {
 		padding: 10,
-	  },
-	  dropdownItemText: {
+	},
+	dropdownItemText: {
 		color: 'black',
-	  },
+	},
 	//Buttons
 	buttonText: {
 		fontSize: 14,

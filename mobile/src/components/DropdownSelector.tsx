@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { styles } from 'src/assets/styles';
 
 interface DropdownItem {
@@ -33,9 +34,12 @@ const DropdownSelector: React.FC<DropdownSelectorProps> = ({
         style={styles.dropdownToggle}
         onPress={() => setIsOpen(!isOpen)}
       >
+        <View style={styles.dropdownContent}>
         <Text style={styles.dropdownText}>
           {selectedValue ? items.find(item => item.value === selectedValue)?.label : placeholder}
         </Text>
+        <Ionicons name={isOpen ? "caret-up" : "caret-down"} size={16} color="black"/>
+        </View>
       </TouchableOpacity>
       {isOpen && (
         <View style={styles.dropdownListContainer}>

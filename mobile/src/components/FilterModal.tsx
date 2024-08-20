@@ -32,12 +32,25 @@ const rarityLevels = [
 	{ label: 'Rare Shiny', value: 'Rare Shiny' },
 	{ label: 'Rare Shiny GX', value: 'Rare Shiny GX' },
 	{ label: 'Rare Ultra', value: 'Rare Ultra' },
-
   ];
+
+const typeLabels = [
+  { label: 'Fire', value: 'Fire' },
+  { label: 'Water', value: 'Water' },
+  { label: 'Grass', value: 'Grass' },
+  { label: 'Darkness', value: 'Darkness' },
+  { label: 'Dragon', value: 'Dragon' },
+  { label: 'Lightning', value: 'Lightning' },
+  { label: 'Fairy', value: 'Fairy' },
+  { label: 'Fighting', value: 'Fighting' },
+  { label: 'Colorless', value: 'Colorless' },
+  { label: 'Psychic', value: 'Psychic' },
+  { label: 'Metal', value: 'Metal' },
+]; 
 
 const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilter }) => {
 	const [selectedRarity, setSelectedRarity] = useState<string | undefined>();
-
+  const [selectedType, setSelectedType] = useState<string | undefined>();
 	return (
     <Modal
       animationIn="pulse"
@@ -52,11 +65,24 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilt
         <Button title="Name" onPress={() => applyFilter('Name')} />
         <Button title="Series" onPress={() => applyFilter('Series')} />
         <Button title="Types" onPress={() => applyFilter('Types')} />
+        {/* Type Dropdown */}
+        <Text style={styles.filterModalTitle}>Types</Text>
+        <DropdownSelector
+          items={typeLabels}
+          selectedValue={selectedType}
+          placeholder='Select a Type'
+          onValueChange={(value) => {
+            setSelectedType(value);
+            applyFilter('Types', value);
+            onClose(); // Close the modal after selection
+          }}
+        />
         {/* Rarity Dropdown */}
         <Text style={styles.filterModalTitle}>Rarity</Text>
         <DropdownSelector
           items={rarityLevels}
           selectedValue={selectedRarity}
+          placeholder='Select a Rarity'
           onValueChange={(value) => {
             setSelectedRarity(value);
             applyFilter('Rarity', value);
