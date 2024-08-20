@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Button } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; 
 
 import Modal from 'react-native-modal';
+import DropdownSelector from './DropdownSelector';
 import { styles } from 'src/assets/styles';
 
 interface FilterModalProps {
@@ -54,22 +54,15 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilt
         <Button title="Types" onPress={() => applyFilter('Types')} />
         {/* Rarity Dropdown */}
         <Text style={styles.filterModalTitle}>Rarity</Text>
-        <Picker
+        <DropdownSelector
+          items={rarityLevels}
           selectedValue={selectedRarity}
-          style={styles.rarityPicker} 
-          onValueChange={(itemValue) => {
-            setSelectedRarity(itemValue);
-            if (itemValue) {
-              applyFilter('Rarity', itemValue);
-              onClose(); // Close the modal after selection
-            }
+          onValueChange={(value) => {
+            setSelectedRarity(value);
+            applyFilter('Rarity', value);
+            onClose(); // Close the modal after selection
           }}
-        >
-          <Picker.Item label="Select a Rarity" value={null} />
-          {rarityLevels.map((rarity) => (
-            <Picker.Item label={rarity.label} value={rarity.value} key={rarity.value} style={styles.rarityPickerItem}/>
-          ))}
-        </Picker>
+        />
         <Button title="HP" onPress={() => applyFilter('HP')} />
       </View>
     </Modal>

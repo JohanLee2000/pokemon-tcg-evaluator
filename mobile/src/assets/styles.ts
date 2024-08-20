@@ -144,6 +144,30 @@ import { StyleSheet } from 'react-native';
 		width: 20,
 		height: 20,
 	},
+	//Dropdown Selector
+	dropdownToggle: {
+		borderWidth: 1,
+		borderColor: 'gray',
+		padding: 10,
+		borderRadius: 4,
+		backgroundColor: 'white',
+	  },
+	  dropdownText: {
+		color: 'black',
+	  },
+	  dropdownListContainer: {
+		borderWidth: 1,
+		borderColor: 'gray',
+		borderRadius: 4,
+		backgroundColor: 'white',
+		maxHeight: 150, // You can set a max height to control how tall the list gets
+	  },
+	  dropdownItem: {
+		padding: 10,
+	  },
+	  dropdownItemText: {
+		color: 'black',
+	  },
 	//Buttons
 	buttonText: {
 		fontSize: 14,
