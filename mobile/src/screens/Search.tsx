@@ -31,22 +31,21 @@ const Search = () => {
       if (filter === 'Name') {
         result = await pokemon.card.where({ q: `name:${wildcardQuery}` });
       } else if (filter === 'Series') {
-        result = await pokemon.set.where({ q: `series:${wildcardQuery}` });
+        result = await pokemon.card.where({ q: `set.name:"${query}"` });
       } else if (filter === 'Types') {
-        result = await pokemon.card.where({ q: `types:${wildcardQuery}` });
+        result = await pokemon.card.where({ q: `types:${query}` });
       } else if (filter === 'Rarity') {
-        result = await pokemon.card.where({ q: `rarity:"${query}"` }); //Rare Ultra etc. Map to it with radio button?
+        result = await pokemon.card.where({ q: `rarity:"${query}"` });
       } else if (filter === 'HP') {
-        result = await pokemon.card.where({ q: `hp:[240 TO *]` });
+        result = await pokemon.card.where({ q: `hp:${query}` }); // For range search: `hp:[340 TO *]`
       }
       if (result.data.length === 0) {
-        // If no cards are found, set cards to an empty array
         console.log('Search term did not match anything in database. Try a different search.');
         setCards([]);
       } else {
         // Otherwise, set the found cards
         setCards(result.data);
-        console.log(result.data[0]);
+        console.log(result.data[1]);
       }
     } catch (error) {
       console.log(error);
@@ -57,7 +56,7 @@ const Search = () => {
   };
 
   const applyFilter = (selectedFilter: string, value?: string) => {
-  if ((selectedFilter === 'Rarity' || selectedFilter === 'Types') && value) {
+  if ((selectedFilter === 'Rarity' || selectedFilter === 'Types' || selectedFilter === 'HP' || selectedFilter === 'Series') && value) {
     setQuery(value); // Set the query to the selected rarity level
   }
   setFilter(selectedFilter);
