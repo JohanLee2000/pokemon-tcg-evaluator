@@ -241,11 +241,12 @@ import { StyleSheet } from 'react-native';
 		width: 90,
 		height: 126,
 		resizeMode: 'contain',
-		marginLeft: 10,
+		marginRight: 10,
 	},
 	cartRows: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
+		alignItems: 'center',
 		marginBottom: 10,
 		marginHorizontal: 5,
 		backgroundColor: '#fff',
@@ -254,16 +255,19 @@ import { StyleSheet } from 'react-native';
 		elevation: 2,
 	},
 	cartRowInfo: {
-		marginRight: 10,
+		width: '30%',
 		justifyContent: 'center',
+		marginLeft: 10,
 	},
 	cartRowText: {
 		fontWeight: 'bold',
 		fontSize: 14,
 		textAlign: 'left',
+		flexWrap: 'wrap',
 	},
 	urlText: {
 		color: 'blue',
 		textDecorationLine: 'underline',
+		flexWrap: 'wrap',
 	},
   });

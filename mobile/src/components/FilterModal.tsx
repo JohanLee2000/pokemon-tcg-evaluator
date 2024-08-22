@@ -29,8 +29,14 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilt
       style={styles.modal}
     >
       <View style={styles.filterModalContainer}>
-        <Text style={styles.filterModalTitle}>Filter by</Text>
-        <Button title="Name" onPress={() => applyFilter('Name')} />
+        <Text style={styles.filterModalTitle}>Search by:</Text>
+        <Button title="Name" onPress={() => {
+          applyFilter('Name');
+          setSelectedHP(null);
+          setSelectedRarity(null);
+          setSelectedSeries(null);
+          setSelectedType(null);
+          }} />
         {/* Series Dropdown */}
         <Text style={styles.filterModalTitle}>Series</Text>
         <DropdownSelector
@@ -40,6 +46,9 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilt
           onValueChange={(value) => {
             setSelectedSeries(value);
             applyFilter('Series', value);
+            setSelectedRarity(null);
+            setSelectedHP(null);
+            setSelectedType(null);
             onClose(); // Close the modal after selection
           }}
         />
@@ -52,6 +61,9 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilt
           onValueChange={(value) => {
             setSelectedType(value);
             applyFilter('Types', value);
+            setSelectedRarity(null);
+            setSelectedHP(null);
+            setSelectedSeries(null);
             onClose(); // Close the modal after selection
           }}
         />
@@ -64,6 +76,9 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilt
           onValueChange={(value) => {
             setSelectedRarity(value);
             applyFilter('Rarity', value);
+            setSelectedHP(null);
+            setSelectedType(null);
+            setSelectedSeries(null);
             onClose(); // Close the modal after selection
           }}
         />
@@ -76,6 +91,9 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, applyFilt
           onValueChange={(value) => {
             setSelectedHP(value);
             applyFilter('HP', value);
+            setSelectedType(null);
+            setSelectedSeries(null);
+            setSelectedRarity(null);
             onClose(); // Close the modal after selection
           }}
         />

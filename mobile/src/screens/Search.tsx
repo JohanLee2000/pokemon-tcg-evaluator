@@ -57,7 +57,10 @@ const Search = () => {
 
   const applyFilter = (selectedFilter: string, value?: string) => {
   if ((selectedFilter === 'Rarity' || selectedFilter === 'Types' || selectedFilter === 'HP' || selectedFilter === 'Series') && value) {
-    setQuery(value); // Set the query to the selected rarity level
+    setQuery(value); // Set the query to the selected filter
+  }
+  if (selectedFilter === 'Name'){
+    setQuery('');
   }
   setFilter(selectedFilter);
   setFilterModalVisible(false);
@@ -86,7 +89,7 @@ const Search = () => {
         />
         {/* Filter  */}
         <View style={styles.filterContainer}>
-          <Text style={styles.filterLabel}>Filter by:</Text>
+          <Text style={styles.filterLabel}>Search by:</Text>
           <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
             <View style={styles.filterContent}>
               <Text style={styles.filterText}>{filter}</Text>

@@ -33,9 +33,6 @@ function Cart() {
 			keyExtractor={item => item.id}
 			renderItem={({ item }) => (
 			  <View style={styles.cartRows}>
-				<TouchableOpacity onPress={() => openCardModal(item)}>
-				  <Image source={{ uri: item.images.small }} style={styles.cartImage} />
-				</TouchableOpacity>
 				<View style={styles.cartRowInfo}>
 					<Text style={styles.cartRowText}>{item.name}</Text>
 				</View>
@@ -59,6 +56,9 @@ function Cart() {
 					</View>
 					)}
 				</View>
+				<TouchableOpacity onPress={() => openCardModal(item)}>
+				  <Image source={{ uri: item.images.small }} style={styles.cartImage} />
+				</TouchableOpacity>
 			  </View>
 			)}
 		  />
