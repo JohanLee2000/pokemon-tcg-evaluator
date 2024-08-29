@@ -16,7 +16,7 @@ function Home() {
       try {
         // Card Roulette
         let rouletteResults: Card[] = [];
-        const rouletteQueries = ['charizard', 'darkrai', 'luxray', 'salamence', 'klang', 'swinub', 'gardevoir', 'mewtwo', 'dragonite', 'arceus', 'haunter', 'gible', 'cufant', 'escavalier', 'golurk', 'spheal', 'venomoth', 'riolu', 'trubbish', 'charcadet', 'skarmory', 'torkoal', 'groudon', 'zapdos', 'aggron', 'mantine', 'kingdra', 'rhyperior'];
+        const rouletteQueries = ['charizard', 'darkrai', 'luxray', 'salamence', 'klang', 'swinub', 'latios','gardevoir', 'mewtwo', 'dragonite', 'arceus', 'haunter', 'gible', 'cufant', 'escavalier', 'golurk', 'spheal', 'venomoth', 'riolu', 'trubbish', 'charcadet', 'skarmory', 'torkoal', 'groudon', 'zapdos', 'aggron', 'mantine', 'kingdra', 'rhyperior'];
 
         //Randomly select 5 pokemon from the list
         const selectedQueries = [];
@@ -35,7 +35,7 @@ function Home() {
 
         // Valuable Cards
         let valuableResults: Card[] = [];
-        const valuableQueries = ['swsh12pt5-37', 'xy7-92', 'swsh35-71', 'sm5-100', 'bw8-95', 'xy1-2'];
+        const valuableQueries = ['swsh12pt5-37', 'xy7-92', 'xy7-98', 'sm5-100', 'bw8-95', 'xy1-2'];
 
         for (const query of valuableQueries) {
           const result = await pokemon.card.find(query);
