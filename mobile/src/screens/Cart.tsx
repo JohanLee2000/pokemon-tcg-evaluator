@@ -40,18 +40,18 @@ function Cart() {
 					{/* Cardmarket Price Link */}
 					{item.cardmarket?.url && (
 					<View>
-						<Text style={styles.cartRowText}>Cardmarket Price</Text>
+						<Text style={styles.cartRowText}>Cardmarket</Text>
 						<TouchableOpacity onPress={() => handleOpenURL(item.cardmarket.url)}>
-							<Text style={styles.urlText}>€{item.cardmarket?.prices.averageSellPrice ?? 'N/A'} | {item.cardmarket?.prices.avg1} | {item.cardmarket?.prices.trendPrice}</Text>
+							<Text style={styles.urlText}>€{item.cardmarket?.prices.averageSellPrice ?? 'N/A'} (Avg) {"\n"}€{item.cardmarket?.prices.avg30} (30-day)</Text>
 						</TouchableOpacity>
 					</View>
 					)}
 					{/* TCGPlayer Price Link */}
 					{item.tcgplayer?.url && (
 					<View>
-						<Text style={styles.cartRowText}>TCGPlayer Price</Text>
+						<Text style={styles.cartRowText}>TCGPlayer</Text>
 						<TouchableOpacity onPress={() => handleOpenURL(item.tcgplayer.url)}>
-							<Text style={styles.urlText}>${item.tcgplayer?.prices.holofoil.market ?? 'N/A'} | {item.tcgplayer?.prices.holofoil.mid}</Text>
+							<Text style={styles.urlText}>${item.tcgplayer?.prices.holofoil.market ?? 'N/A'} (Avg)</Text>
 						</TouchableOpacity>
 					</View>
 					)}
