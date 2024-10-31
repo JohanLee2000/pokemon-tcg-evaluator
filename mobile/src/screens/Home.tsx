@@ -1,15 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { View, Text, useWindowDimensions, TouchableOpacity, Image } from 'react-native';
+import Animated, {
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
+import { styles } from "src/assets/styles";
 import pokemon from '../configs/pokemon';
 import CardModal from 'src/components/CardModal';
 import { Card } from 'src/components/CardModal';
-import { styles } from "src/assets/styles";
+
+
+interface CardComponentProps {
+  item: Card; // Specify that item is of type Card
+  onPress: () => void; // Specify the onPress prop
+}
 
 function Home() {
   const [cardRoulette, setCardRoulette] = useState<Card[]>([]);
   const [valuableCards, setValuableCards] = useState<Card[]>([]);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [cardModalVisible, setCardModalVisible] = useState(false);
+
+  const { width } = useWindowDimensions();
+  // Separate refs for each FlatList
+  const rouletteRef = useAnimatedRef();
+  const valuableRef = useAnimatedRef();
+
+  // Shared values for each FlatList
+  const rouletteOffset = useSharedValue(0);
+  const valuableOffset = useSharedValue(0);
+
+  const CardComponent: React.FC<CardComponentProps> = React.memo(({ item, onPress }) => {
+    return (
+      <View style={styles.rouletteCard}>
+        <TouchableOpacity onPress={onPress}>
+          <Image source={{ uri: item.images.small }} style={styles.image} />
+        </TouchableOpacity>
+      </View>
+    );
+  });
+  
 
   useEffect(() => {
     const fetchFeaturedCards = async () => {
@@ -55,48 +86,83 @@ function Home() {
     setSelectedCard(card);
     setCardModalVisible(true);
   };
+  const handleOpenCardModal = useCallback((card) => {
+    openCardModal(card);
+  }, [openCardModal]);
+  
 
   const closeCardModal = () => {
     setCardModalVisible(false);
     setSelectedCard(null);
   };
 
+  // Separate onScroll handlers for each list
+  const onRouletteScroll = useAnimatedScrollHandler({
+    onScroll: (e) => {
+      rouletteOffset.value = e.contentOffset.x;
+    },
+    onMomentumEnd: (e) => {
+      rouletteOffset.value = e.contentOffset.x;
+    },
+  });
+
+  const onValuableScroll = useAnimatedScrollHandler({
+    onScroll: (e) => {
+      valuableOffset.value = e.contentOffset.x;
+    },
+    onMomentumEnd: (e) => {
+      valuableOffset.value = e.contentOffset.x;
+    },
+    
+  });
+
+  
   return (
     <View style={styles.homeContainer}>
       <Text style={styles.title}>Featured Roulette</Text>
-        <View style={styles.flatListContainer}>
-          <FlatList
-            data={cardRoulette}
-            horizontal
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <View style={styles.rouletteCard}>
-                <TouchableOpacity onPress={() => openCardModal(item)}>
-                  <Image source={{ uri: item.images.small }} style={styles.image} />
-                </TouchableOpacity>
-              </View>
-            )}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.flatListContent}
-          />
-        </View>
+      <View style={styles.flatListContainer}>
+        <Animated.FlatList
+          ref={rouletteRef}
+          data={cardRoulette}
+          horizontal
+          keyExtractor={(item, index) => `${item.id}-${index}`} // Unique key by combining id and index
+          renderItem={({ item }) => (
+            <CardComponent item={item} onPress={() => handleOpenCardModal(item)} />
+
+          )}
+          showsHorizontalScrollIndicator={false}
+          onScroll={onRouletteScroll}
+          scrollEventThrottle={16}
+          onEndReached={() => {
+            // Logic to fetch more cards or duplicate current cards for scrolling effect
+            setCardRoulette(prev => [...prev, ...cardRoulette]); // Dummy implementation
+          }}
+          onEndReachedThreshold={0.5}
+          contentContainerStyle={styles.flatListContent}
+          // extraData={cardRoulette} // Pass relevant state here
+        />
+      </View>
       <Text style={styles.title}>Expensive Cards</Text>
-        <View style={styles.flatListContainer}>
-          <FlatList
-            data={valuableCards}
-            horizontal
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <View style={styles.rouletteCard}>
-                <TouchableOpacity onPress={() => openCardModal(item)}>
-                  <Image source={{ uri: item.images.small }} style={styles.image} />
-                </TouchableOpacity>
-              </View>
-            )}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.flatListContent}
-          />
-        </View>
+      <View style={styles.flatListContainer}>
+        <Animated.FlatList
+          ref={valuableRef}
+          data={valuableCards}
+          horizontal
+          keyExtractor={(item, index) => `${item.id}-${index}`} // Ensure unique key by appending index
+          renderItem={({ item }) => (
+            <CardComponent item={item} onPress={() => handleOpenCardModal(item)} />
+
+          )}
+          showsHorizontalScrollIndicator={false}
+          onScroll={onValuableScroll}
+          scrollEventThrottle={16}
+          onEndReached={() => {
+            setValuableCards(prev => [...prev, ...valuableCards]); // Dummy implementation
+          }}
+          onEndReachedThreshold={0.5}
+          contentContainerStyle={styles.flatListContent}
+        />
+      </View>
       <CardModal
         isVisible={cardModalVisible}
         onClose={closeCardModal}
@@ -105,6 +171,5 @@ function Home() {
     </View>
   );
 }
-
 
 export default Home;
