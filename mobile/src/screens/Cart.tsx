@@ -51,7 +51,7 @@ function Cart() {
 					<View>
 						<Text style={styles.cartRowText}>TCGPlayer</Text>
 						<TouchableOpacity onPress={() => handleOpenURL(item.tcgplayer.url)}>
-							<Text style={styles.urlText}>${item.tcgplayer?.prices.holofoil.market ?? 'N/A'} (Avg)</Text>
+							<Text style={styles.urlText}>${item.tcgplayer?.prices?.holofoil?.market ?? 'N/A'} (Avg)</Text>
 						</TouchableOpacity>
 					</View>
 					)}
