@@ -8,6 +8,7 @@ import { styles } from "src/assets/styles";
 function Home() {
   const [cardRoulette, setCardRoulette] = useState<Card[]>([]);
   const [valuableCards, setValuableCards] = useState<Card[]>([]);
+  const [rareCards, setRareCards] = useState<Card[]>([]);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [cardModalVisible, setCardModalVisible] = useState(false);
 
@@ -42,6 +43,15 @@ function Home() {
           valuableResults.push(result);
         }
         setValuableCards(valuableResults);
+
+        // Rare Cards
+        let rareResults: Card[] = [];
+        const rareQueries = ['Rare Holo GX', 'Rare Shiny GX'];
+        for (const query of rareQueries){
+          const result = await pokemon.card.where({ q: `rarity:"${query}"`, pageSize: 3});
+          rareResults = [...rareResults, ...result.data];
+        }
+        setRareCards(rareResults);
 
       } catch (error) {
         console.error(error);
@@ -84,6 +94,23 @@ function Home() {
         <View style={styles.flatListContainer}>
           <FlatList
             data={valuableCards}
+            horizontal
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.rouletteCard}>
+                <TouchableOpacity onPress={() => openCardModal(item)}>
+                  <Image source={{ uri: item.images.small }} style={styles.image} />
+                </TouchableOpacity>
+              </View>
+            )}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContent}
+          />
+        </View>
+        <Text style={styles.title}>Rare Cards</Text>
+        <View style={styles.flatListContainer}>
+          <FlatList
+            data={rareCards}
             horizontal
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
